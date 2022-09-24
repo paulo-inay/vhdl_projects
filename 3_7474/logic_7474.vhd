@@ -37,7 +37,7 @@ begin
     int_1(2) <= not (PRE2_L and int_2(2) and int_4(2));
     int_2(2) <= not (CLR2_L and int_1(2) and CLK);
     int_3(2) <= not (int_2(2) and CLK and int_4(2));
-    int_4(2) <= not (int_3(2) and CLR2_L and D1);
+    int_4(2) <= not (int_3(2) and CLR2_L and D2);
     Q2_internal <= not (PRE2_L and int_2(2) and Q2L_internal);
     Q2L_internal <= not (Q2_internal and CLR2_L and int_3(2));
 end architecture;

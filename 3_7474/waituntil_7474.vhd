@@ -15,11 +15,13 @@ end entity;
 ----------------------------------------------------------------------------------
 architecture rts of waituntil_7474 is
 begin
-    -- how to model the nonstable characteristic of the 7474 when both PRE and
+    -- it seems to me that its impossible to implement the 7474 with wait until
+	 --since it has asynchronous preset and reset, but regardless here's an 
+	 --implementation using process
+	 -- how to model the nonstable characteristic of the 7474 when both PRE and
     --CLR are active?
-    DFF1: process
+    DFF1: process(CLK, CLR1_L, PRE1_L)
     begin
-        wait until rising_edge(CLK) or CLR1_L = '0' or PRE1_L = '0';
         if (PRE1_L = '0' and CLR1_L = '0') then
             Q1 <= '1';
             Q1_L <= '1';
@@ -29,15 +31,14 @@ begin
         elsif (PRE1_L = '1' and CLR1_L ='0') then
             Q1 <= '0';
             Q1_L <= '1';
-        else
+        elsif rising_edge(CLK) then
             Q1 <= D1;
             Q1_L <= not D1;
         end if;
     end process;
     
-    DFF2: process
+    DFF2: process(CLK, CLR2_L, PRE2_L)
     begin
-        wait until rising_edge(CLK) or CLR2_L = '0' or PRE2_L = '0';
         if (PRE2_L = '0' and CLR2_L = '0') then
             Q2 <= '1';
             Q2_L <= '1';
@@ -47,7 +48,7 @@ begin
         elsif (PRE2_L = '1' and CLR2_L ='0') then
             Q2 <= '0';
             Q2_L <= '1';
-        else
+        elsif rising_edge(CLK) then
             Q2 <= D2;
             Q2_L <= not D2;
         end if;

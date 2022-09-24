@@ -28,12 +28,11 @@ begin
          "ZZZZZZZZ";
 
     -- determine reg1
-    first_register: process
+    first_register: process(SRCLK, SRCLR_L)
     begin
-        wait until rising_edge(SRCLK) or SRCLR_L = '0';
         if(SRCLR_L = '0') then
             reg1 <= (others => '0');
-        else
+        elsif rising_edge(SRCLK) then
             reg1(7) <= SER;
             for i in 6 downto 0 loop
                 reg1(i) <= reg1(i+1);
