@@ -18,15 +18,6 @@ architecture rts of forloop_74595 is
     signal reg2: std_logic_vector(7 downto 0);
     signal Q: std_logic_vector(7 downto 0);
 begin
-    -- circuit output
-    QA <= Q(7); QB <= Q(6); QC <= Q(5); QD <= Q(4); QE <= Q(3); QF <= Q(2); 
-    QG <= Q(1); QH <= Q(0);
-    QH_prime <= reg1(0);
-    
-    -- determine Q
-    Q <= reg2 when OE_L = '0' else
-         "ZZZZZZZZ";
-
     -- determine reg1
     first_register: process(SRCLK, SRCLR_L)
     begin
@@ -48,5 +39,14 @@ begin
             reg2(i) <= reg1(i);
         end loop;
     end process;
+    
+    -- determine Q
+    Q <= reg2 when OE_L = '0' else
+         "ZZZZZZZZ";
+         
+    -- circuit output
+    QA <= Q(7); QB <= Q(6); QC <= Q(5); QD <= Q(4); QE <= Q(3); QF <= Q(2); 
+    QG <= Q(1); QH <= Q(0);
+    QH_prime <= reg1(0);
 end architecture;
 ----------------------------------------------------------------------------------
